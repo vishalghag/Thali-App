@@ -1,25 +1,21 @@
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { remove } from '../store/cartSlice';
 
 const Card = () => {
 
-  // useEffect(()=>{
-  //   totalPrice()
-  // },[])
   const products = useSelector((state) => state.cart);
   const dispatch = useDispatch()
-  // console.log(products,'produts');
+
   const removeHandler = (item) =>{
     dispatch(remove(item))
   }
 
-  const totalPrice = (fh)=>{
-    products.map((item)=>{
-        return fh + item.price
-    })
-  }
-
+  let sum = 0;
+  products.map((item)=>(
+    sum += item.price
+  ))
+console.log(sum,'sum');
   return (
     <div>
     
@@ -32,11 +28,12 @@ const Card = () => {
               <h5>{item.dish}</h5>
               <h5>{item.price}</h5>
               <button className='btn' onClick={()=> removeHandler(item.id)}>Remove</button>
-              <h4>Total:-{totalPrice(item.price)}</h4>
               </div>
             ))}
           
       </div>
+      <h4>Total:-{sum}</h4>
+
     </div>
   )
 }
